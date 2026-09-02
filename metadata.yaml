@@ -1,5 +1,5 @@
 name: aPromptGuardian
 version: v1.0.0
 author: Sea
-desc: 流式提示词框架：优化→审查→过滤→复核→防护→核验→感知。维护优化系统优化提示词、屏蔽注入攻击、身份核验、信息感知、黑白名单与WebUi管理
+desc: 开箱即用的流式提示词框架：优化→审查→过滤→复核→防护→核验→感知。维护优化系统优化提示词、屏蔽注入攻击、身份核验、信息感知、黑白名单与 WebUi 管理
 repo: https://github.com/Seeeaa/AstrBot_Plugin_aPromptGuardian

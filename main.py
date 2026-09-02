@@ -20,7 +20,7 @@ from .stages.optimizer import optimize_personas, rollback_personas
 from .rules.persona import PersonaMatcher
 
 
-@register("aPromptGuardian", "Sea", "流式提示词框架：优化→审查→过滤→复核→防护→核验→感知。维护优化系统优化提示词、屏蔽注入攻击、身份核验、信息感知、黑白名单与WebUi管理", "v1.0.0")
+@register("aPromptGuardian", "Sea", "开箱即用的流式提示词框架：优化→审查→过滤→复核→防护→核验→感知。维护优化系统优化提示词、屏蔽注入攻击、身份核验、信息感知、黑白名单与 WebUi 管理", "v1.0.0")
 class aPromptGuardian(Star):
     """插件主类，持有流水线、封禁管理器和拦截日志三个核心组件。"""
 
