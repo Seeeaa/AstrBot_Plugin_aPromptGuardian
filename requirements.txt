@@ -1,0 +1,2 @@
+chinese-calendar>=1.9.0
+lunarcalendar

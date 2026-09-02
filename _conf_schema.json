@@ -1,0 +1,242 @@
+{
+  "enable_optimize": {
+    "description": "是否启用提示词优化辅助",
+    "type": "bool",
+    "hint": "⚠️ 警告：开启后会深覆盖 AstrBot 当前人设的 system prompt，开启并重载插件后会自动执行优化。请务必先开启「自动备份初始提示词」；若结果不理想，用 /回滚人设 命令恢复。优化通过当前对话模型把人设重写为结构更清晰、约束更硬的结构化版本。",
+    "default": false
+  },
+  "enable_auto_backup": {
+    "description": "自动备份初始提示词",
+    "type": "bool",
+    "hint": "开启提示词优化时，先把当前人设的原始 system prompt 备份到人设的备份字段，便于回滚（默认开）",
+    "default": true
+  },
+  "defense_sensitivity": {
+    "description": "防御力度（灵敏度）",
+    "type": "string",
+    "hint": "低（low）/ 中（medium）/ 高（high），灵敏度越高越容易触发保护",
+    "default": "medium"
+  },
+  "defense_action": {
+    "description": "防御等级（命中后的处置方式）",
+    "type": "string",
+    "hint": "观察（observe）/ 标注放行（mark）/ 仅去除危险内容（rewrite）/ 拦截（block）",
+    "default": "block"
+  },
+  "post_defense_protection": {
+    "description": "防御后保护机制",
+    "type": "string",
+    "hint": "无（none，拦截后不操作）/ 重读设定（reread，注入小段提示词让模型重新阅读并遵守系统设定）/ 强制刷新（refresh，清空上下文并切换新会话，重置连续对话污染）",
+    "default": "reread"
+  },
+  "auto_ban": {
+    "description": "是否自动拉黑",
+    "type": "bool",
+    "hint": "命中注入攻击后是否自动拉黑该用户",
+    "default": false
+  },
+  "ban_duration": {
+    "description": "自动拉黑时长（分钟）",
+    "type": "int",
+    "hint": "0 表示永久拉黑",
+    "default": 60
+  },
+  "blacklist": {
+    "description": "黑名单",
+    "type": "list",
+    "hint": "被拉黑的用户 ID 列表（静态黑名单，命中即拦截）",
+    "default": []
+  },
+  "whitelist": {
+    "description": "白名单",
+    "type": "list",
+    "hint": "跳过防护检测的用户 ID 列表",
+    "default": []
+  },
+  "llm_review": {
+    "description": "是否使用 LLM 复核",
+    "type": "string",
+    "hint": "一直（always）/ 判危险时（risk）/ 从不（never）",
+    "default": "risk"
+  },
+  "input_blacklist_words": {
+    "description": "输入黑名单词",
+    "type": "list",
+    "hint": "用户输入中命中这些词即拦截",
+    "default": []
+  },
+  "output_blacklist_words": {
+    "description": "输出黑名单词",
+    "type": "list",
+    "hint": "模型输出中命中这些词即拦截",
+    "default": []
+  },
+  "enable_jailbreak": {
+    "description": "检测：越狱诱导",
+    "type": "bool",
+    "hint": "识别「忽略之前指令」「进入开发者模式」等越狱诱导语句（默认开）",
+    "default": true
+  },
+  "enable_injection_keywords": {
+    "description": "检测：注入关键词",
+    "type": "bool",
+    "hint": "识别「忽略/覆盖/忘记指令」等注入关键词（默认开）",
+    "default": true
+  },
+  "enable_injection_patterns": {
+    "description": "检测：注入正则模式",
+    "type": "bool",
+    "hint": "用正则匹配伪造系统消息、角色扮演注入等模式（默认开）",
+    "default": true
+  },
+  "enable_persona_conflict": {
+    "description": "检测：人设冲突",
+    "type": "bool",
+    "hint": "识别试图改写角色设定、破坏人设的语句（默认开）",
+    "default": true
+  },
+  "enable_hate_detection": {
+    "description": "检测：仇恨内容",
+    "type": "bool",
+    "hint": "识别仇恨、歧视、煽动性内容（默认开）",
+    "default": true
+  },
+  "enable_harassment_detection": {
+    "description": "检测：骚扰/辱骂/霸凌",
+    "type": "bool",
+    "hint": "识别骚扰、辱骂、霸凌等攻击性内容（默认开）",
+    "default": true
+  },
+  "enable_malicious_link": {
+    "description": "检测：恶意外链",
+    "type": "bool",
+    "hint": "识别钓鱼、诈骗等恶意外链（默认开）",
+    "default": true
+  },
+  "enable_encoded_detection": {
+    "description": "检测：编码混淆",
+    "type": "bool",
+    "hint": "解码 base64/百分号/Unicode/hex 后查注入特征（默认开）",
+    "default": true
+  },
+  "enable_persona_consistency": {
+    "description": "检测：人设一致性",
+    "type": "bool",
+    "hint": "对当前人设做一致性评分，越界请求加分（默认开）",
+    "default": true
+  },
+  "id_map_list": {
+    "description": "身份核验映射表（昵称解析列表）",
+    "type": "template_list",
+    "hint": "把容易被冒用的昵称与它的真实用户 ID 配对。当有人用列表里的昵称、但真实 ID 对不上时，会向模型插入身份提醒。",
+    "templates": {
+      "id_map_template": {
+        "name": "身份映射项",
+        "items": {
+          "nickname": {
+            "description": "用户昵称",
+            "hint": "需要核验的昵称（别人改成这个名字就可能被冒用）",
+            "type": "string",
+            "default": "默认昵称"
+          },
+          "user_id": {
+            "description": "预期真实 ID",
+            "hint": "该昵称对应的真实用户 ID",
+            "type": "string",
+            "default": "123456789"
+          }
+        }
+      }
+    }
+  },
+  "check_mode": {
+    "description": "身份检查方式",
+    "type": "string",
+    "hint": "完全匹配（exact）/ 包含时（contain）",
+    "default": "exact"
+  },
+  "warning_template": {
+    "description": "身份提醒模板（完全匹配失败）",
+    "type": "string",
+    "hint": "支持占位符 {nickname} {actual_id} {expected_id}，留空用默认",
+    "default": ""
+  },
+  "notice_template": {
+    "description": "身份提醒模板（包含匹配失败）",
+    "type": "string",
+    "hint": "支持占位符 {actual_nickname} {nickname} {actual_id} {expected_id}，留空用默认",
+    "default": ""
+  },
+  "timezone": {
+    "description": "感知时区",
+    "type": "string",
+    "hint": "感知信息使用的时区",
+    "default": "Asia/Shanghai"
+  },
+  "enable_platform": {
+    "description": "感知：平台",
+    "type": "bool",
+    "hint": "感知 QQ / 微信 / Telegram 等平台来源",
+    "default": true
+  },
+  "enable_date": {
+    "description": "感知：日期",
+    "type": "bool",
+    "hint": "感知当前日期",
+    "default": true
+  },
+  "enable_weekday": {
+    "description": "感知：星期",
+    "type": "bool",
+    "hint": "感知当前星期几",
+    "default": true
+  },
+  "enable_time_period": {
+    "description": "感知：时间段",
+    "type": "bool",
+    "hint": "感知上午/中午/下午/晚间/深夜/凌晨",
+    "default": true
+  },
+  "enable_solar_term": {
+    "description": "感知：节气",
+    "type": "bool",
+    "hint": "感知当前节气",
+    "default": false
+  },
+  "enable_lunar": {
+    "description": "感知：农历（干支+生肖）",
+    "type": "bool",
+    "hint": "感知当前农历年份（干支纪年 + 生肖）",
+    "default": false
+  },
+  "enable_almanac": {
+    "description": "感知：黄历宜忌",
+    "type": "bool",
+    "hint": "感知当日黄历宜忌（简化娱乐版）",
+    "default": false
+  },
+  "enable_holiday": {
+    "description": "感知：节假日",
+    "type": "bool",
+    "hint": "感知当日是否为主要节假日",
+    "default": false
+  },
+  "enable_webui": {
+    "description": "启用 WebUI 管理面板",
+    "type": "bool",
+    "hint": "启动本地管理面板，访问时带 ?key=密码",
+    "default": true
+  },
+  "webui_port": {
+    "description": "WebUI 端口",
+    "type": "int",
+    "hint": "管理面板监听端口",
+    "default": 6187
+  },
+  "webui_password": {
+    "description": "WebUI 访问密码",
+    "type": "string",
+    "hint": "访问管理面板的密码",
+    "default": "promptguardian"
+  }
+}
