@@ -4,7 +4,7 @@
 
 <h1 align="center">aPromptGuardian</h1>
 
-<p align="center"><b>给你的 AstrBot 装一条提示词流水线，七道工序，全程托管。</b></p>
+<p align="center"><b>一键安装，开箱即用的提示词框架插件，从头到尾优化防御复核，全程托管</b></p>
 
 <p align="center">
   <img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="license">
