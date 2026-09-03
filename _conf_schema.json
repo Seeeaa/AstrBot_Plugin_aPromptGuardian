@@ -209,12 +209,6 @@
     "hint": "感知当前农历年份（干支纪年 + 生肖）",
     "default": false
   },
-  "enable_almanac": {
-    "description": "感知：黄历宜忌",
-    "type": "bool",
-    "hint": "感知当日黄历宜忌（简化娱乐版）",
-    "default": false
-  },
   "enable_holiday": {
     "description": "感知：节假日",
     "type": "bool",

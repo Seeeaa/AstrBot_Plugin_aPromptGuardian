@@ -24,7 +24,7 @@ _BOOL_KEYS = (
     "enable_persona_conflict", "enable_hate_detection", "enable_harassment_detection",
     "enable_malicious_link", "enable_encoded_detection", "enable_persona_consistency",
     "enable_platform", "enable_date", "enable_weekday", "enable_time_period",
-    "enable_solar_term", "enable_lunar", "enable_almanac", "enable_holiday",
+    "enable_solar_term", "enable_lunar", "enable_holiday",
 )
 _INT_KEYS = ("ban_duration",)
 _LIST_KEYS = (
@@ -181,7 +181,6 @@ button.danger{background:var(--danger);color:#fff}
     <div class="row">
       <div class="field"><label class="switch"><input type="checkbox" id="cfgSolarTerm"> 节气</label></div>
       <div class="field"><label class="switch"><input type="checkbox" id="cfgLunar"> 农历（干支+生肖）</label></div>
-      <div class="field"><label class="switch"><input type="checkbox" id="cfgAlmanac"> 黄历宜忌</label></div>
       <div class="field"><label class="switch"><input type="checkbox" id="cfgHoliday"> 节假日</label></div>
     </div>
   </div>
@@ -226,7 +225,7 @@ async function boot(){
 const PERCEPTION = [
   ['cfgPlatform','enable_platform'], ['cfgDate','enable_date'], ['cfgWeekday','enable_weekday'],
   ['cfgTimePeriod','enable_time_period'], ['cfgSolarTerm','enable_solar_term'], ['cfgLunar','enable_lunar'],
-  ['cfgAlmanac','enable_almanac'], ['cfgHoliday','enable_holiday'],
+  ['cfgHoliday','enable_holiday'],
 ];
 const DETECT = [
   ['cfgJailbreak','enable_jailbreak'], ['cfgInjKeywords','enable_injection_keywords'],
@@ -439,7 +438,6 @@ class WebUIServer:
                 "enable_time_period": self.config.get("enable_time_period", True),
                 "enable_solar_term": self.config.get("enable_solar_term", False),
                 "enable_lunar": self.config.get("enable_lunar", False),
-                "enable_almanac": self.config.get("enable_almanac", False),
                 "enable_holiday": self.config.get("enable_holiday", False),
             })
         # POST 更新配置

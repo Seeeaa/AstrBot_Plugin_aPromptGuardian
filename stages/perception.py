@@ -2,7 +2,7 @@
 
 模型本身不知道「现在几点」「今天星期几」「这是群聊还是私聊」，
 这个阶段在每次请求时把这些算出来，拼成一段前缀插到提示词最前面。
-能力包括：日期、星期、时间段、节气、干支生肖、黄历宜忌、节假日、
+能力包括：日期、星期、时间段、节气、干支生肖、节假日、
 平台、群名、消息类型（是否含图片/语音/视频）。
 """
 from datetime import datetime, date
@@ -70,13 +70,6 @@ TIAN_GAN = ["甲", "乙", "丙", "丁", "戊", "己", "庚", "辛", "壬", "癸"
 DI_ZHI = ["子", "丑", "寅", "卯", "辰", "巳", "午", "未", "申", "酉", "戌", "亥"]
 SHENG_XIAO = ["鼠", "牛", "虎", "兔", "龙", "蛇", "马", "羊", "猴", "鸡", "狗", "猪"]
 
-# 黄历宜忌（简化娱乐用）
-YI_ITEMS = ["祭祀", "祈福", "求嗣", "开光", "出行", "解除", "动土", "起基",
-            "开市", "交易", "立券", "挂匾", "安床", "入宅", "移徙", "栽种",
-            "纳畜", "入殓", "安葬", "启钻", "除服", "成服", "修造", "竖柱"]
-JI_ITEMS = ["嫁娶", "开市", "安葬", "动土", "破土", "作灶", "安床", "入宅",
-            "移徙", "出行", "祭祀", "祈福", "开光", "纳采", "订盟", "造庙"]
-
 # 主要法定节假日（月, 日, 名称），不含调休（调休需年度数据）
 HOLIDAYS = [
     (1, 1, "元旦"),
@@ -116,10 +109,6 @@ class PerceptionStage(Stage):
             lunar_text = self._lunar_date(now)
             if lunar_text:
                 parts.append(f"农历：{lunar_text}")
-        if self.config.get("enable_almanac"):
-            almanac = self._almanac(now)
-            if almanac:
-                parts.append(f"黄历：{almanac}")
         if self.config.get("enable_holiday"):
             holiday = self._holiday(now)
             if holiday:
@@ -162,18 +151,6 @@ class PerceptionStage(Stage):
             if (m, d) <= current:
                 last = name
         return last
-
-    @staticmethod
-    def _almanac(now: datetime) -> str:
-        """黄历宜忌，按日期做哈希选几个词，纯娱乐别当真。"""
-        day_hash = now.year * 10000 + now.month * 100 + now.day
-        yi_count = (day_hash % 4) + 2
-        ji_count = (day_hash % 3) + 2
-        yi_start = day_hash % len(YI_ITEMS)
-        ji_start = (day_hash * 7) % len(JI_ITEMS)
-        yi = "、".join(YI_ITEMS[(yi_start + i * 3) % len(YI_ITEMS)] for i in range(yi_count))
-        ji = "、".join(JI_ITEMS[(ji_start + i * 5) % len(JI_ITEMS)] for i in range(ji_count))
-        return f"宜 {yi} | 忌 {ji}"
 
     @staticmethod
     def _lunar_date(now: datetime) -> str:
