@@ -54,7 +54,7 @@ INJECTION_PATTERNS = [
     {"name": "高危任务诱导", "pattern": r"(制作|编写|输出).{0,20}(炸弹|病毒|漏洞|非法|攻击|黑客)", "weight": 4, "desc": "诱导生成高危或违规内容"},
     # ---- 唆使 AI 执行危险操作（修改服务器/删文件/跑命令）----
     {"name": "危险操作诱导", "pattern": r"(修改|更改|删除|清空|关闭|重启|停止).{0,8}(服务器|配置文件|数据库|系统文件|用户数据|服务|密码)", "weight": 7, "desc": "唆使修改或破坏服务器内容"},
-    {"name": "破坏性命令", "pattern": r"(rm\s+-rf|rm\s+-fr|mkfs|shutdown|reboot|drop\s+table|truncate\s+table|kill\s+-9|chmod\s+777|dd\s+if=)", "weight": 6, "desc": "破坏性 shell 命令"},
+    {"name": "破坏性命令", "pattern": r"(\brm\s+|sudo\s+rm|rmdir|mkfs|shutdown|reboot|drop\s+table|truncate\s+table|kill\s+-9|chmod\s+777|dd\s+if=)", "weight": 7, "desc": "破坏性 shell 命令（含 rm 及高危系统操作）"},
     {"name": "命令执行诱导", "pattern": r"(执行|运行|帮我跑|跑一下|跑这段).{0,8}(命令|脚本|shell|代码|这段)", "weight": 4, "desc": "诱导执行任意命令或代码"},
     {"name": "提示词泄露变体", "pattern": r"(把|将).{0,8}(你的|系统的|初始).{0,8}(提示词|指令|设定|prompt).{0,8}(发给|告诉|给我|贴出|复制)", "weight": 5, "desc": "诱导贴出系统提示词的变体表述"},
 
