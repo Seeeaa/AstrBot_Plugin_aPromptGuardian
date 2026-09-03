@@ -6,9 +6,7 @@ meta prompt 把原提示词重排成结构更清晰、约束更硬的版本，�
 persona 的 system_prompt。角色扮演类输出 JSON 结构化人设。
 模型调用失败时静默跳过、不动原人设。
 """
-import logging
-
-logger = logging.getLogger(__name__)
+from astrbot.api import logger
 
 
 # ---- 三类优化提问模板，{original} 会被替换成原人设提示词 ----

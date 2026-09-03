@@ -3,9 +3,7 @@
 把多个处理阶段按顺序串起来，逐阶段执行，
 阶段之间通过 PipelineContext 共享数据、互不调用。
 """
-import logging
-
-logger = logging.getLogger(__name__)
+from astrbot.api import logger
 
 
 class Pipeline:

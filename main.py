@@ -6,6 +6,7 @@
 """
 from astrbot.api.star import Context, Star, register
 from astrbot.api.event import filter, AstrMessageEvent, MessageEventResult
+from astrbot.api import logger
 from astrbot.core import AstrBotConfig
 
 from .core.pipeline import Pipeline
@@ -67,8 +68,7 @@ class aPromptGuardian(Star):
             try:
                 await self.webui.start(port=port)
             except Exception as exc:
-                import logging
-                logging.getLogger(__name__).error("[aPromptGuardian] WebUI 启动失败: %s", exc)
+                logger.error("[aPromptGuardian] WebUI 启动失败: %s", exc)
 
     async def terminate(self):
         """插件卸载时关掉 WebUI，释放端口。"""

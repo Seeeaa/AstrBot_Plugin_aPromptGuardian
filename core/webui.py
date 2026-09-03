@@ -7,12 +7,10 @@
 面板按流水线逻辑顺序排列：防护 → 优化 → 身份 → 感知，后接封禁管理与拦截日志。
 """
 import json
-import logging
 from datetime import datetime
 
 from aiohttp import web
-
-logger = logging.getLogger(__name__)
+from astrbot.api import logger
 
 
 # 配置里需要读写归一化的字段分组，POST 时按类型规范化，避免前端传错类型
