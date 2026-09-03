@@ -90,6 +90,8 @@ flowchart TD
 # 方式一：AstrBot 插件市场搜索 aPromptGuardian 安装
 # 方式二：手动克隆
 git clone https://github.com/Seeeaa/AstrBot_Plugin_aPromptGuardian
+# 方式三：手动下载 zip（没装 git 的 Windows）
+#   到 Releases 下载 Source code (zip)，解压后把整个文件夹放进 data/plugins
 
 # 重启 AstrBot，插件自动加载
 # 打开 WebUI 面板
