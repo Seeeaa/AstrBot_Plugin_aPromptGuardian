@@ -138,7 +138,7 @@ async def optimize_personas(context, config: dict) -> None:
             continue
 
         ptype = classify_persona(original)
-        meta_prompt = get_meta_prompt(ptype).format(original=original)
+        meta_prompt = get_meta_prompt(ptype).replace("{original}", original)
 
         optimized = ""
         try:

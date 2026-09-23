@@ -57,7 +57,10 @@ class aPromptGuardian(Star):
         self.persona_matcher.load_persona(pname, psys)
 
         if self.config.get("enable_optimize"):
-            await optimize_personas(self.context, self.config)
+            try:
+                await optimize_personas(self.context, self.config)
+            except Exception as exc:
+                logger.error("[aPromptGuardian] 优化人设失败，跳过优化（不影响插件加载）: %s", exc)
 
         # WebUI 默认开，可配置关掉；端口冲突时只记日志不崩
         if self.config.get("enable_webui", True):
