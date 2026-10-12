@@ -6,6 +6,8 @@
 
 <p align="center"><b>一键安装，开箱即用的提示词框架插件，从头到尾优化防御复核，全程托管</b></p>
 
+<p align="center">报错、改进、聊天可以加 Q：181874337（GitHub 不常看）</p>
+
 <p align="center">
   <img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="license">
   <img src="https://img.shields.io/badge/AstrBot-Plugin-orange.svg" alt="platform">
