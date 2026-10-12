@@ -21,7 +21,7 @@ from .stages.optimizer import optimize_personas, rollback_personas
 from .rules.persona import PersonaMatcher
 
 
-@register("aPromptGuardian", "Sea", "开箱即用的流式提示词框架：优化→审查→过滤→复核→防护→核验→感知。维护优化系统优化提示词、屏蔽注入攻击、身份核验、信息感知、黑白名单与 WebUi 管理", "1.1.2")
+@register("aPromptGuardian", "Sea", "开箱即用的流式提示词框架：优化→审查→过滤→复核→防护→核验→感知。维护优化系统优化提示词、屏蔽注入攻击、身份核验、信息感知、黑白名单与 WebUi 管理", "1.1.3")
 class aPromptGuardian(Star):
     """插件主类，持有流水线、封禁管理器和拦截日志三个核心组件。"""
 
@@ -36,12 +36,12 @@ class aPromptGuardian(Star):
         # 人设一致性匹配器：画像在 initialize 时从 AstrBot 当前人设抓取
         self.persona_matcher = PersonaMatcher()
 
-        # WebUI 服务在 initialize 阶段按需启动，这里先建实例
+        # 管理面板用 AstrBot Plugin Views 机制注册，集成进 AstrBot WebUI，不单独占端口
         self.webui = WebUIServer(
             self.config, self.ban_manager, self.incident_log,
-            password=self.config.get("webui_password") or "promptguardian",
             context=self.context,
         )
+        self.webui.register(self.context)
 
         # 请求时流水线的阶段顺序是固定的：先校验身份，再做防护，最后注入感知信息
         self.pipeline = Pipeline([
@@ -62,23 +62,9 @@ class aPromptGuardian(Star):
             except Exception as exc:
                 logger.error("[aPromptGuardian] 优化人设失败，跳过优化（不影响插件加载）: %s", exc)
 
-        # WebUI 默认开，可配置关掉；端口冲突时只记日志不崩
-        if self.config.get("enable_webui", True):
-            try:
-                port = int(self.config.get("webui_port") or 6187)
-            except (TypeError, ValueError):
-                port = 6187
-            try:
-                await self.webui.start(port=port)
-            except Exception as exc:
-                logger.error("[aPromptGuardian] WebUI 启动失败: %s", exc)
-
     async def terminate(self):
-        """插件卸载时关掉 WebUI，释放端口。"""
-        try:
-            await self.webui.stop()
-        except Exception:
-            pass
+        """插件卸载时清理。Plugin Views 由 AstrBot 管理，无需手动释放端口。"""
+        pass
 
     @filter.on_llm_request()
     async def on_request(self, event: AstrMessageEvent, req):

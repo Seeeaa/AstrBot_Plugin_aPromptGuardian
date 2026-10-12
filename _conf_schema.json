@@ -214,23 +214,5 @@
     "type": "bool",
     "hint": "感知当日是否为主要节假日",
     "default": false
-  },
-  "enable_webui": {
-    "description": "启用 WebUI 管理面板",
-    "type": "bool",
-    "hint": "启动本地管理面板，访问时带 ?key=密码",
-    "default": true
-  },
-  "webui_port": {
-    "description": "WebUI 端口",
-    "type": "int",
-    "hint": "管理面板监听端口",
-    "default": 6187
-  },
-  "webui_password": {
-    "description": "WebUI 访问密码",
-    "type": "string",
-    "hint": "访问管理面板的密码",
-    "default": "promptguardian"
   }
 }

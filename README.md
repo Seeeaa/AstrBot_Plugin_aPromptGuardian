@@ -94,8 +94,7 @@ git clone https://github.com/Seeeaa/AstrBot_Plugin_aPromptGuardian
 #   到 Releases 下载 Source code (zip)，解压后把整个文件夹放进 data/plugins
 
 # 重启 AstrBot，插件自动加载
-# 打开 WebUI 面板
-http://127.0.0.1:6187?key=promptguardian
+# 打开管理面板：AstrBot WebUI → 插件 → aPromptGuardian → 打开可视化视图
 ```
 
 依赖会自动安装；`chinese-calendar` 与 `lunarcalendar` 缺失时，农历与节假日自动降级为简化版，不影响其余功能。
@@ -125,6 +124,8 @@ http://127.0.0.1:6187?key=promptguardian
   <img src="webui.png" alt="aPromptGuardian WebUI" width="100%">
 </p>
 
+管理面板用 AstrBot 插件可视化视图（Plugin Views）实现，集成在 AstrBot WebUI 的插件详情页里，无需单独开端口。
+
 内置管理面板，按流水线顺序排布全部分区，配置改完即时保存落盘：
 
 | 板块 | 功能 |
@@ -151,7 +152,6 @@ http://127.0.0.1:6187?key=promptguardian
 | `auto_ban` / `ban_duration` | 布尔 / 数字 | `false` / `60` | 自动拉黑及时长 |
 | `id_map_list` | 结构化 | `[]` | 昵称到真实 ID 映射表 |
 | `check_mode` | 枚举 | `exact` | 身份检查方式 |
-| `webui_port` / `webui_password` | 数字 / 文本 | `6187` / `promptguardian` | 面板端口与密码 |
 
 ## 📋 更新日志
 
